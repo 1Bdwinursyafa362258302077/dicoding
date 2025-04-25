@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dicoding Story - Share your coding journey">
+    <meta name="theme-color" content="#2d3e50">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    <title>Dicoding Story</title>
+    <style>
+      .notification-btn {
+        padding: 10px 16px;
+        margin: 10px;
+        background-color: #2d3e50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .notification-btn:hover {
+        background-color: #1f2b38;
+      }
+    </style>
+  </head>
+  <body class="app-shell">
+    <header class="app-header">
+      <div class="main-header container">
+        <a class="brand-name" href="#/"><i class="fas fa-camera"></i> Dicoding Story</a>
+
+        <nav id="navigation-drawer" class="navigation-drawer">
+          <ul id="nav-list" class="nav-list">
+            <li><a href="#/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#/add"><i class="fas fa-plus"></i> Add Story</a></li>
+            <li><a href="#/about"><i class="fas fa-info-circle"></i> About</a></li>
+            <li id="auth-menu"><a href="#/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          </ul>
+        </nav>
+
+        <button id="drawer-button" class="drawer-button">☰</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content app-content">
+      <!-- ✅ Tombol Notifikasi -->
+      <div class="container">
+        <button id="enable-notification-btn" class="notification-btn">
+          🔔 Enable Notifications
+        </button>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <p class="text-center">&copy; 2025 Dicoding Story</p>
+      </div>
+    </footer>
+
+    <!-- ✅ Script notifikasi -->
+    <script type="module">
+      import NotificationHelper from './scripts/utils/notification-helper.js';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const notifButton = document.getElementById('enable-notification-btn');
+
+        notifButton.addEventListener('click', async () => {
+          const permissionGranted = await NotificationHelper.requestPermission();
+          if (permissionGranted) {
+            NotificationHelper.showNotification({
+              title: 'Notifications Enabled',
+              options: {
+                body: 'You will now receive updates!',
+                icon: '/icons/icon-192x192.png',
+                badge: '/icons/icon-72x72.png',
+              },
+            });
+          } else {
+            alert('Permission not granted for notifications.');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
